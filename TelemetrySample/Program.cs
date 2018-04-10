@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System;
 using System.Linq;
-using Newtonsoft.Json;
 using PUBGTelemetryParser;
-using PUBGTelemetryParser.Enums;
 
 namespace TelemetrySample
 {
@@ -12,9 +9,14 @@ namespace TelemetrySample
         static void Main(string[] args)
         {
             var fileName = "sampleTelemetry.json";
-            var jsonString = File.ReadAllText(fileName);
-            var telemtry = JsonConvert.DeserializeObject<IList<TelemetryEvent>>(jsonString);
-            var carePackages = telemtry.Where(x => x.EventType == TelemetryEventType.CarePackageSpawn).Select(x => x.ItemPackage);
+            var matchDetails = TelemetryParser.TelemetryToMatch(fileName);
+
+            Console.WriteLine("Map: {0}", matchDetails.MapName);
+            Console.WriteLine("Match Started At: {0}", matchDetails.MatchStartTime);
+            Console.WriteLine("Match Ended At: {0}", matchDetails.MatchEndTime);
+            Console.WriteLine("Total Match Length: {0} minutes", matchDetails.MatchLength.TotalMinutes);
+            Console.WriteLine("Number Players: {0}", matchDetails.Characters.Count());
+            Console.WriteLine("Number Teams: {0}", matchDetails.Teams.Count());
         }
     }
 }

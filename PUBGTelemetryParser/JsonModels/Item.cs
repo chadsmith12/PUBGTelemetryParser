@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using PUBGTelemetryParser.Enums;
@@ -21,16 +22,28 @@ namespace PUBGTelemetryParser
         /// The category this item belongs too.
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
-        public ItemCategory Category { get; set; }
+        public ItemCategory? Category { get; set; }
         /// <summary>
         /// The subcategory this item belongs too.
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
-        public ItemSubCategory SubCategory { get; set; }
+        public ItemSubCategory? SubCategory { get; set; }
         /// <summary>
         /// The items that are attached to this item.
         /// </summary>
-        public List<Item> AttachedItems { get; set; }
+        public List<string> AttachedItems { get; set; }
+
+        /// <summary>
+        /// The attached items as friendly names
+        /// </summary>
+        public List<string> FriendlyAttachedItems
+        {
+            get
+            {
+                return AttachedItems.Select(x => !TelemetryDictionaries.ItemIds.ContainsKey(x) ? x : TelemetryDictionaries.ItemIds[x]).ToList();
+            }
+        }
+
         /// <summary>
         /// The item's name.
         /// This is gotten from the item dictionary for this items id.

@@ -5,15 +5,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="telemetryDictionaries\damageCauserName.json" />
+    <None Remove="telemetryDictionaries\damageTypeCategory.json" />
     <None Remove="telemetryDictionaries\itemId.json" />
+    <None Remove="telemetryDictionaries\mapName.json" />
+    <None Remove="telemetryDictionaries\vehicleId.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="telemetryDictionaries\damageCauserName.json" />
+    <EmbeddedResource Include="telemetryDictionaries\damageTypeCategory.json" />
     <EmbeddedResource Include="telemetryDictionaries\itemId.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Converters\" />
+    <EmbeddedResource Include="telemetryDictionaries\mapName.json" />
+    <EmbeddedResource Include="telemetryDictionaries\vehicleId.json" />
   </ItemGroup>
 
   <ItemGroup>

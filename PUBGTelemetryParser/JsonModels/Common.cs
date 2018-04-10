@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using PUBGTelemetryParser.Helpers;
 
 namespace PUBGTelemetryParser
 {
@@ -29,20 +30,6 @@ namespace PUBGTelemetryParser
         /// If the friendly map name is not known at this time will just return <see cref="MapName"/>
         /// </summary>
         [JsonIgnore]
-        public string FriendlyMapName
-        {
-            get
-            {
-                switch (MapName)
-                {
-                    case "Desert_Main":
-                        return "Miramar";
-                    case "Erangel_Main":
-                        return "Erangel";
-                    default:
-                        return MapName;
-                }
-            }
-        }
+        public string FriendlyMapName => !TelemetryDictionaries.MapNames.ContainsKey(MapName) ? MapName : TelemetryDictionaries.MapNames[MapName];
     }
 }
