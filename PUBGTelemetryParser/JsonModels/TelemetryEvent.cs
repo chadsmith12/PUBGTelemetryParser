@@ -114,6 +114,11 @@ namespace PUBGTelemetryParser
         public Item Weapon { get; set; }
 
         /// <summary>
+        /// An item that could be had been picked up.
+        /// </summary>
+        public Item Item { get; set; }
+
+        /// <summary>
         /// The id of this match
         /// </summary>
         public string MatchId { get; set; }

@@ -15,10 +15,30 @@ namespace PUBGTelemetryParser.TelemetryEvents
             Weapon = telemetryEvent.Weapon;
             Vehicle = telemetryEvent.Vehicle;
         }
+
+        /// <summary>
+        /// The attack id.
+        /// </summary>
         public int AttackId { get; set; }
+
+        /// <summary>
+        /// The character that did the attack.
+        /// </summary>
         public Character Attacker { get; set; }
+
+        /// <summary>
+        /// The type of attack this was.
+        /// </summary>
         public AttackType AttackType { get; set; }
+
+        /// <summary>
+        /// The weapon that did this attack.
+        /// </summary>
         public Item Weapon { get; set; }
+
+        /// <summary>
+        /// The vehicle in the attack.
+        /// </summary>
         public Vehicle Vehicle { get; set; }
     }
 }

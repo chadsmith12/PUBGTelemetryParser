@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using PUBGTelemetryParser.TelemetryEvents;
 
 namespace PUBGTelemetryParser
 {
@@ -36,7 +37,7 @@ namespace PUBGTelemetryParser
         /// <summary>
         /// The characters in a match.
         /// </summary>
-        public IEnumerable<Character> Characters { get; set; }
+        public IEnumerable<Player> Players { get; set; }
 
         /// <summary>
         /// The teams in a match.
@@ -45,8 +46,33 @@ namespace PUBGTelemetryParser
         {
             get
             {
-                return Characters.GroupBy(x => x.TeamId).Select(x => new Team{TeamId = x.Key, TeamMembers = x.Select(y => y).ToList()});
+                return Players.GroupBy(x => x.TeamId).Select(x => new Team { TeamId = x.Key, TeamMembers = x.Select(y => y)});
             }
         }
+
+        /// <summary>
+        /// Represents all the game state events for a match.
+        /// </summary>
+        public IEnumerable<PUBGTelemetryParser.TelemetryEvents.GameState> GameStates { get; set; }
+
+        /// <summary>
+        /// All the vehcle destroys in a match.
+        /// </summary>
+        public IEnumerable<VehicleDestroy> VehicleDestroys { get; set; }
+
+        /// <summary>
+        /// All the care packages that dropped in this match.
+        /// </summary>
+        public IEnumerable<ItemPackage> CarePackages { get; set; }
+
+        /// <summary>
+        /// All the times a care packaged spawned
+        /// </summary>
+        public IEnumerable<ItemPackage> ItemPackagesSpawns { get; set; }
+
+        /// <summary>
+        /// All the times a care packaged landed.
+        /// </summary>
+        public IEnumerable<ItemPackage> ItemPackagesLands { get; set; }
     }
 }

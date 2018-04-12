@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace PUBGTelemetryParser
 {
@@ -13,8 +14,21 @@ namespace PUBGTelemetryParser
         public int TeamId { get; set; }
 
         /// <summary>
+        /// The ranking of where this team finished.
+        /// </summary>
+        public int TeamRanking => TeamMembers.First().FinalRanking;
+
+        /// <summary>
+        /// the total number of kills this team had.
+        /// </summary>
+        public int TotalKills
+        {
+            get { return TeamMembers.Select(x => x.NumberKills).Sum(); }
+        }
+
+        /// <summary>
         /// The team members for this team.
         /// </summary>
-        public IList<Character> TeamMembers { get; set; }
+        public IEnumerable<Player> TeamMembers { get; set; }
     }
 }
