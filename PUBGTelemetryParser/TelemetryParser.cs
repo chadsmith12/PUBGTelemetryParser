@@ -9,7 +9,7 @@ namespace PUBGTelemetryParser
 {
     public static class TelemetryParser
     {
-        public static PubgMatch TelemetryToMatch(string telemetryFile)
+        public static PubgMatch ParseTelemetry(string telemetryFile)
         {
             var jsonString = File.ReadAllText(telemetryFile);
             var telemtry = JsonConvert.DeserializeObject<IList<TelemetryEvent>>(jsonString);
@@ -57,7 +57,7 @@ namespace PUBGTelemetryParser
                 MatchStartTime = telemtry.First(x => x.EventType == TelemetryEventType.MatchStart).EventTime,
                 MatchEndTime = telemtry.First(x => x.EventType == TelemetryEventType.MatchEnd).EventTime,
                 Players = players,
-                GameStates = telemtry.Where(x => x.EventType == TelemetryEventType.GameStatePeriodic).Select(x => new PUBGTelemetryParser.TelemetryEvents.GameState(x)),
+                GameStates = telemtry.Where(x => x.EventType == TelemetryEventType.GameStatePeriodic).Select(x => new TelemetryEvents.GameState(x)),
                 VehicleDestroys = telemtry.Where(x => x.EventType == TelemetryEventType.VehicleDestroy).Select(x => new VehicleDestroy(x)),
                 CarePackages = telemtry.Where(x => x.EventType == TelemetryEventType.CarePackageLand).Select(x => x.ItemPackage),
                 ItemPackagesSpawns = telemtry.Where(x => x.EventType == TelemetryEventType.CarePackageSpawn).Select(x => x.ItemPackage),
