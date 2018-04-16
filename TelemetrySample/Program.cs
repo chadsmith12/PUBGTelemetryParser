@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
-using Pubg.Net;
 using PUBGTelemetryParser;
+using PUBGTelemetryParser.ApiService;
 
 namespace TelemetrySample
 {
@@ -18,21 +18,14 @@ namespace TelemetrySample
             Console.WriteLine("Match Ended At: {0}", matchDetails.MatchEndTime);
             Console.WriteLine("Total Match Length: {0} minutes", matchDetails.MatchLength.TotalMinutes);
             Console.WriteLine("Most Popular Gun: {0}", popularGun);
-            PubgApiConfiguration.Configure((apiSettings) =>
+            PubgConfiguration.Configure((settings) =>
             {
-                apiSettings.ApiKey =
-                    "API KEY HERE";
+                settings.ApiKey = "API KEY HERE";
             });
-
             var playerService = new PubgPlayerService();
-            var playersTask = playerService.GetPlayersAsync(PubgRegion.PCNorthAmerica, new GetPubgPlayersRequest{PlayerNames = new []{"twigman08"}});
-            playersTask.Wait();
-            var players = playersTask.Result;
-            var latestMath = players.First().MatchIds.First();
-            var matchService = new PubgMatchService();
-            var matchTask = matchService.GetMatchAsync(PubgRegion.PCNorthAmerica, latestMath);
-            matchTask.Wait();
-            var match = matchTask.Result;
+            var playerTask = playerService.FilterPlayersById(PUBGTelemetryParser.Enums.PubgRegion.PcNorthAmerica, "account.b34d58ce76d5459daf24991532333f30");
+            playerTask.Wait();
+            var result = playerTask.Result;
         }
     }
 }
